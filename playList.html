@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+function playList(music, JSX=document.body) {
+  if(!music) {
+    music = [
+      `https://vgmdownloads.com/soundtracks/mega-man-x-snes-gamerip/azubfcqvle/07%20Zero.mp3`,
+      `https://vgmdownloads.com/soundtracks/mega-man-x-snes-gamerip/wulpzjyrfd/12%20Chill%20Penguin.mp3`,
+      `https://vgmdownloads.com/soundtracks/mega-man-x-snes-gamerip/fdhvqkzlco/18%20Armored%20Armadillo.mp3`
+    ];
+  }
+
+  var options, HTML='';
+  
+  options = [
+    `autoplay`,
+    `onended="this.nextElementSibling.play()"`,
+    `onended="this.parentElement.children[0].play()"`
+  ];
+  
+  HTML += '<section style="display:none;">';
+  HTML += music.map( (v, i) => {
+    if(i==0) {
+      return `
+      <audio preload="auto" 
+      controls ${options[0]} ${options[1]}>
+        <source src="${v}">
+      </audio>`
+    } else if(i < music.length-1) {
+      return `
+      <audio preload="auto" controls ${options[1]}>
+        <source src="${v}">
+      </audio>`;
+    } else {
+      return `
+      <audio preload="auto" controls ${options[2]}>
+        <source src="${v}">
+      </audio>`
+    }    
+  }).join('');
+  HTML += '</section>';
+
+  JSX.innerHTML += HTML; 
+} playList();
+</script>
+
+</body>
+</html>
